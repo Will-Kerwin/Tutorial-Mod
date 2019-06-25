@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "tutorialmod",
+  "name": "Tutorial Mod",
+  "description": "tutorial mod to learn.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Kerwin"],
+  "credits": "The Forge and FML guys and mcjty, for making this Tutorial",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["jei", "RedstoneFlux", "waila", "intwheel"]
 }
 ]
