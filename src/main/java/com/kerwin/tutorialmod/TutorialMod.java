@@ -1,8 +1,11 @@
 package com.kerwin.tutorialmod;
 
+import com.kerwin.tutorialmod.block.ModBlocks;
 import com.kerwin.tutorialmod.proxy.CommonProxy;
 import com.kerwin.tutorialmod.reference.Reference;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -16,6 +19,11 @@ import org.apache.logging.log4j.Logger;
 public class TutorialMod {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static CommonProxy proxy;
+
+    public static CreativeTabs creativeTabs = new CreativeTabs("Tutorial Mod"){
+        @Override
+        public ItemStack getTabIconItem(){return new ItemStack(ModBlocks.blockElectricFurnace);}
+    };
 
     @Mod.Instance
     public static TutorialMod instance;
