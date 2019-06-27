@@ -20,7 +20,7 @@ public class TutorialMod {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static CommonProxy proxy;
 
-    public static CreativeTabs creativeTabs = new CreativeTabs("Tutorial Mod"){
+    public static CreativeTabs creativeTab = new CreativeTabs("Tutorial Mod"){
         @Override
         public ItemStack getTabIconItem(){return new ItemStack(ModBlocks.blockElectricFurnace);}
     };
