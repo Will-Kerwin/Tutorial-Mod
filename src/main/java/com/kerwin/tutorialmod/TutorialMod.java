@@ -3,6 +3,7 @@ package com.kerwin.tutorialmod;
 import com.kerwin.tutorialmod.block.ModBlocks;
 import com.kerwin.tutorialmod.proxy.CommonProxy;
 import com.kerwin.tutorialmod.reference.Reference;
+import com.kerwin.tutorialmod.reference.Version;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION,
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Version.VERSION,
         dependencies = Reference.MOD_DEPENDENCIES, useMetadata = true)
 public class TutorialMod {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)

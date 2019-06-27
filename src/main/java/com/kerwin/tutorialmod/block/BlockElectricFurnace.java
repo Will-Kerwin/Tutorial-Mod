@@ -3,6 +3,7 @@ package com.kerwin.tutorialmod.block;
 import com.kerwin.tutorialmod.TutorialMod;
 import com.kerwin.tutorialmod.reference.Reference;
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -11,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -18,8 +20,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import com.kerwin.tutorialmod.tile.TileElectricFurnace;
 
-public class BlockElectricFurnace extends Block {
+import javax.annotation.Nullable;
+
+// block is for basic tile entitiy is storing data more than the standard 16
+public class BlockElectricFurnace extends Block implements ITileEntityProvider {
 
     // this is for multi textures
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -38,6 +44,12 @@ public class BlockElectricFurnace extends Block {
 
         //setting default state for multi texture
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileElectricFurnace();
     }
 
     @SideOnly(Side.CLIENT)
@@ -65,4 +77,6 @@ public class BlockElectricFurnace extends Block {
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
     }
+
+
 }
