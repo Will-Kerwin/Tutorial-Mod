@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item" : "tutorialmod:electric_furnace"
+  },
+  "pattern": [
+    "ccc",
+    "cFc",
+    "ccc"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "_comment": "\"type\": \"forge:oredict\", \"ore\": \"ingotIron\"",
+      "item": "minecraft:iron_ingot"
+
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  }
+}

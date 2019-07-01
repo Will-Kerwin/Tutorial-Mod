@@ -1,5 +1,6 @@
 package com.kerwin.tutorialmod.proxy;
 
+import com.kerwin.tutorialmod.block.ModBlocks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -14,8 +15,9 @@ public class ClientProxy extends CommonProxy{
         super.preInit(event);
     }
 
+    // self explan
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event){
-
+        ModBlocks.initModels();
     }
 }

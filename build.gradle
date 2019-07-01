@@ -9,12 +9,25 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+// for importing properties file
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+def mod_version = getVersionFromJava(file("src/main/java/com/kerwin/tutorialmod/reference/Version.java"))
+version = "${config.minecraft.version}-${mod_version}"
+group = "com.kerwin.tutorialmod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "tutorialmod"
+
 repositories {
-    maven{ // waila repo
+    maven { // waila repo
         name "Mobius Repo"
         url "http://tehnut.info/maven"
     }
-    maven{ // jei
+    maven { // jei
         url "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
@@ -22,64 +35,43 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
-    maven{ // intWheel
+    maven { // intWheel
         url "http://maven.k-4u.nl"
     }
-    maven{ // CoFH
+    maven { // CoFH
         name = "CoFH Maven"
         url = "https://maven.covers1624.net"
     }
+    maven {
+        name = "ChickenBones maven"
+        url = "http://chickenbones.net/maven/"
+    }
 }
 
-version = "1.0"
-group = "com.kerwin.tutorialmod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "tutorialmod"
-
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
 
 minecraft {
-    version = "1.12.2-14.23.5.2838"
+    version = "${config.minecraft.version}-${config.forge.version}"
     runDir = "run"
-    
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
     mappings = "snapshot_20171003"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    useDepAts = true
 }
+
+String mcVersion = config.minecraft.version
 
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    
-    deobfCompile "mezz.jei:jei_1.12.2:4.15.0.283:api"
-    deobfCompile "mcp.mobius.waila:Hwyla:1.8.18-B32_1.12:api"
+    deobfCompile "codechicken:ChickenASM:1.12-${config.chickenasm.version}"
+    deobfCompile "codechicken:CodeChickenLib:${mcVersion}-${config.ccl.version}:deobf"
+    deobfCompile "codechicken:ForgeMultipart:${mcVersion}-${config.multipart.version}:deobf"
+    deobfCompile "mezz.jei:jei_${mcVersion}:${config.jei.version}:api"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.waila.version}_1.12:api"
     deobfCompile "cofh:RedstoneFlux:1.12-2.0.0.1:universal"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-${config.top.version}"
     deobfCompile "com.github.mcjty:intwheel:1.12-1.2.7"
-    runtime "mezz.jei:jei_1.12.2:4.15.0.283"
 
 }
 
@@ -91,13 +83,34 @@ processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+apply plugin: 'java'
+
+def getVersionFromJava(File file) {
+    String major = "0"
+    String minor = "0"
+    String revision = "0"
+
+    String prefix = "public static final int"
+    file.eachLine { String s ->
+        s = s.trim()
+        if (s.startsWith(prefix)) {
+            s = s.substring(prefix.length(), s.length() - 1)
+            s = s.replace('=', ' ').replaceAll(" +", " ").trim()
+            String[] pts = s.split(" ")
+
+            if (pts[0] == "MAJOR") major = pts[pts.length - 1]
+            else if (pts[0] == "MINOR") minor = pts[pts.length - 1]
+            else if (pts[0] == "REVISION") revision = pts[pts.length - 1]
+        }
     }
 }
