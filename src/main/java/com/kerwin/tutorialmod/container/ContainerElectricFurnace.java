@@ -24,8 +24,6 @@ public class ContainerElectricFurnace extends Container {
         addPlayerSlots(playerInventory);
     }
 
-    // TODO Fix gui spacing because it doesnt work and i want to cry HOTBAR
-
     private void addPlayerSlots(IInventory playerInventory) {
         // Slots for the main inventory
         for (int row = 0; row < 3; row++) {
@@ -39,7 +37,7 @@ public class ContainerElectricFurnace extends Container {
         // hotbar slots
         for (int row = 0; row < 9; row++) {
             int x = 8 + row * 18;
-            int y = 58 + 70;
+            int y = 58 + 84;
             this.addSlotToContainer(new Slot(playerInventory, row, x, y));
         }
     }
