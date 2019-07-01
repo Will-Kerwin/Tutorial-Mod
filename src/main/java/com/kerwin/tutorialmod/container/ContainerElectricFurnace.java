@@ -44,7 +44,7 @@ public class ContainerElectricFurnace extends Container {
 
     private void addOwnSlots() {
         IItemHandler itemHandler = this.tileElectricFurnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int x = 18;
+        int x = 17;
         int y = 35;
 
         int slotIndex = 0;

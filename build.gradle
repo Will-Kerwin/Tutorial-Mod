@@ -72,6 +72,9 @@ dependencies {
     deobfCompile "cofh:RedstoneFlux:1.12-2.0.0.1:universal"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-${config.top.version}"
     deobfCompile "com.github.mcjty:intwheel:1.12-1.2.7"
+    
+    runtime"mezz.jei:jei_1.12.2:4.15.0.283"
+
 
 }
 
